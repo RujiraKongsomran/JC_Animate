@@ -3,8 +3,13 @@ package com.rujirakongsomran.jc_animate
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.animateColor
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -16,6 +21,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,13 +39,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             JC_AnimateTheme {
                 // A surface container using the 'background' color from the theme
-                AnimatePadding()
+                AnimateTextColor()
             }
         }
     }
 }
 
-@Preview(showSystemUi = true)
 @Composable
 fun AnimateSizeComposable() {
     var expended by remember {
@@ -64,7 +69,6 @@ fun AnimateSizeComposable() {
     }
 }
 
-@Preview(showSystemUi = true)
 @Composable
 fun AnimateSizeComposableVertical() {
     var expended by remember {
@@ -89,7 +93,6 @@ fun AnimateSizeComposableVertical() {
     }
 }
 
-@Preview(showSystemUi = true)
 @Composable
 fun AnimatePadding() {
     var toggled by remember { mutableStateOf(false) }
@@ -116,6 +119,25 @@ fun AnimatePadding() {
             ) {
                 toggled = !toggled
             }
+    )
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun AnimateTextColor() {
+    val infiniteTransition = rememberInfiniteTransition(label = "infinite transition")
+    val animatedColor by infiniteTransition.animateColor(
+        initialValue = Color(0xFF60DDAD),
+        targetValue = Color(0xFF4285F4),
+        animationSpec = infiniteRepeatable(tween(1000), RepeatMode.Reverse),
+        label = "color"
+    )
+
+    BasicText(
+        text = "Hello Compose",
+        color = {
+            animatedColor
+        },
     )
 }
 
