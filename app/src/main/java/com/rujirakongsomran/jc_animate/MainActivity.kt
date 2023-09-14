@@ -8,9 +8,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -53,6 +55,31 @@ fun AnimateSizeComposable() {
             .animateContentSize()
             .height(if (expended) 400.dp else 200.dp)
             .fillMaxWidth()
+            .clickable(
+                interactionSource = remember {
+                    MutableInteractionSource()
+                },
+                indication = null
+            ) {
+                expended = !expended
+            }
+    ) {
+
+    }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun AnimateSizeComposableVertical() {
+    var expended by remember {
+        mutableStateOf(false)
+    }
+    Box(
+        modifier = Modifier
+            .background(Color.Green)
+            .animateContentSize()
+            .width(if (expended) 250.dp else 100.dp)
+            .fillMaxHeight()
             .clickable(
                 interactionSource = remember {
                     MutableInteractionSource()
